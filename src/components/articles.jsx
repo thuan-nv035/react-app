@@ -1,33 +1,51 @@
-import React, { useState } from "react";
-const api = {
-  key: "358a0f2f34bd446987cf461bc88e0176",
-  base: "https://newsapi.org/v2/everything/?",
-};
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Articles = () => {
-  const [article, setArticle] = useState({});
-  const [query, setQuery] = useState("");
-  const search = (evt) => {
-    if (evt.key === "Enter") {
-      // https://newsapi.org/v2/everything/?q=tesla&from=2022-03-20&sortBy=publishedAt&apiKey=358a0f2f34bd446987cf461bc88e0176
-      fetch(
-        `${api.base}q=${query}&from=2022-04-20&sortBy=popularity&apiKey=${api.key}`,
-        {
-          method: "GET", // *GET, POST, PUT, DELETE, etc.
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setArticle(result);
-          setQuery("");
-          console.log(result);
-        });
-    }
-  };
+  const [dataNews, setDataNews] = useState()
+  const [query, setQuery] = useState();
+  const [isLoading, setIsLoading] = useState(true)
+  const { register, handleSubmit } = useForm();
+  useEffect(()=> {
+    fetch(`https://newsapi.org/v2/everything?q=apple&from=2022-04-19&to=2022-04-19&sortBy=popularity&apiKey=bc533a50ce714156896a51f020d3988c`)
+    .then(res => res.json())
+    .then(data =>{ setDataNews(data); setIsLoading(false)
+    })
+    .catch(err => console.error(err))
+  }, [])  
+  const handleSubmitForm = (data) => {
+    console.log(data);
+
+  }
+  // useEffect(()=> {
+  //   fetch(`https://newsapi.org/v2/everything?q=${query}&from=2022-04-19&to=2022-04-19&sortBy=popularity&apiKey=bc533a50ce714156896a51f020d3988c`)
+  //   .then(res => res.json())
+  //   .then(data =>{ setDataNews(data); setIsLoading(false)
+  //   })
+  //   .catch(err => console.error(err))
+  // }, [query])
+  
+
+
+
+
+
+  // const search = (evt) => {
+  //   if (evt.key === "Enter") {
+  //     // https://newsapi.org/v2/everything/?q=tesla&from=2022-03-20&sortBy=publishedAt&apiKey=358a0f2f34bd446987cf461bc88e0176
+  //     fetch(
+  //       `${api.base}q=${query}&from=2022-04-20&sortBy=popularity&apiKey=${api.key}`,
+  //     )
+  //       .then((res) => res.json())
+  //       .then((result) => {
+  //         setArticle(result);
+  //         setQuery("");
+  //       });
+  //   }
+  // };
   return (
+
+        
     <>
       <div className="container mx-auto">
         <div>
@@ -52,19 +70,17 @@ const Articles = () => {
           <div className="py-20 px-20">
             <div className="flex items-center justify-center">
               <div className="flex border-2 rounded">
-                <input
-                  type="text"
-                  className="px-4 py-2 w-80"
-                  placeholder="Search..."
-                  onChange={(e) => setQuery(e.target.value)}
-                  value={query}
-                  onKeyPress={search}
-                />
+             
+                <form onSubmit={handleSubmit(handleSubmitForm)}>
+                <input className="px-4 py-2 w-80"{...register("search", { required: true, maxLength: 20 })} />
+                <button type="submit">Search</button>
+                </form>
               </div>
             </div>
-            {/* <div className="py-20 px-4">
+            <div className="py-20 px-4">
               <div className="flex justify-between items-center flex-wrap">
-                {article.map((item, index) => {
+                {!isLoading &&dataNews.articles && dataNews.articles.map((item, index) => {
+                  
                   return (
                     <div className="blogs bg-white mr-5 w-3/12" key={index}>
                       <img
@@ -72,7 +88,7 @@ const Articles = () => {
                       />
                       <div className="p-5">
                         <h1 className="text-2xl font-bold text-green-800 py-2">
-                          {item.title}
+                          {item.category}
                         </h1>
                         <p className="bg-white text-sm text-black">
                           {item.description}
@@ -82,7 +98,7 @@ const Articles = () => {
                   );
                 })}
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
