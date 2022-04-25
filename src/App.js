@@ -1,9 +1,19 @@
-
+import List from './pages/todos/List'
+import Add from './pages/todos/Add'
+import Edit from './pages/todos/Edit'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 function App() {
   return (
-    <div className="App">
-     dfvsf
-    </div>
+   <>
+      <BrowserRouter>
+      <Link to = "/add">Add</Link>
+        <Routes>
+          <Route path = "/" element = {<List />}/>
+          <Route path = "/add" element = {<Add />}/>
+          <Route path = "/edit" element = {<Edit />}/>
+        </Routes>
+      </BrowserRouter>
+   </>
   );
 }
 
