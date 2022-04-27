@@ -1,8 +1,9 @@
+import Counter from "./pages/Counter";
 
 function App() {
   return (
     <div className="App">
-     dfvsf
+     <Counter/>
     </div>
   );
 }
