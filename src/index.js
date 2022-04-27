@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+//import { applyMiddleware, createStore } from 'redux';
+//import thunk from 'redux-thunk';
 import App from './App';
-import rootReducer from './reducer/index'
-const store = createStore(rootReducer, applyMiddleware(thunk))
-
-
+//import rootReducer from './reducer/index'
+//const store = createStore(rootReducer, applyMiddleware(thunk))
+import { configureStore } from '@reduxjs/toolkit';
+import { reducers } from './slices';
+const store = configureStore({
+  reducer: reducers
+})
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(

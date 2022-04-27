@@ -1,19 +1,19 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
+import {increment, decrement} from "./../slices/counterSilce";
+
 
 const Counter = () => {
-    const count = useSelector(state => state.counter.count) // trich xuat state count tu count reducer
-    const dispatch = useDispatch()
+    const count = useSelector(state => state.counter.count);//trích xuất state count từ count reducer
+    const dispatch = useDispatch();
     return (
         <div>
             <h1>Counter</h1>
-            <p>
-                {count}
-            </p>
-            <duv>
-                <button onClick={() => dispatch({type: 'counter/increment', payload: {step: 10}})}>+</button>
-                <button onClick={() => dispatch({type: 'counter/decrement', payload: {step: 1}})}>-</button>
-            </duv>
+            <p>{count}</p>
+            <div>
+                <button onClick={() => dispatch(increment({step: 10}))}>+</button>
+                <button onClick={() => dispatch(decrement())}>-</button>
+            </div>
         </div>
     );
 };
