@@ -7,20 +7,19 @@ const Category = () => {
   const dispatch = useDispatch();
 
   const temp = useSelector((state) => state);
-  useEffect(() => {
-    (async () => {
-        console.log(123456789)
-        try {
-            const resp = await authServices.getCategory();
 
-            console.log('check: ', resp)
-            dispatch(getListCategoriesSuccess({data: resp.data.data}));
-            console.log("success" + resp.data.data);
-        } catch (e) {
-            console.log(e)
-        }
-    })();
-}, []);
+  useEffect(() => {
+    console.log("2347654");
+    authServices
+      .getCategory()
+      .then((resp) => {
+        dispatch(getListCategoriesSuccess({ data: resp.data.data }));
+      })
+      .catch((e) => {
+        console.log(e);
+        dispatch(getListCategoriesSuccess({ mess: "false" }));
+      });
+  }, []);
 
   return (
     <>
@@ -32,7 +31,7 @@ const Category = () => {
             </Link>
           </div>
         </div>
-        <div className="py-6 flex">
+        {/* <div className="py-6 flex">
           {temp.map((CategoryItem, CategoryIndex) => {
             return (
               <div className="p-4 md:w-1/2 h-fit" key={CategoryIndex}>
@@ -54,7 +53,7 @@ const Category = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </>
   );
